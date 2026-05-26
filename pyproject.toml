@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "da-template"
+name = "nvda-direction-predictor"
 version = "0.1.0"
-description = "데이터분석·ML 프로젝트 템플릿"
+description = "NVIDIA(NVDA) 내일 종가 방향 이진 분류 — Logistic Regression / XGBoost"
 requires-python = ">=3.11"
 dependencies = [
     # 데이터
@@ -24,6 +24,10 @@ dependencies = [
     "seaborn>=0.13",
     "plotly>=5.18",
     "streamlit>=1.30",
+    # 금융 데이터
+    "yfinance>=0.2",
+    "fredapi>=0.5",
+    "ta>=0.11",
     # 설정
     "pyyaml>=6.0",
     "python-dotenv>=1.0",
