@@ -8,6 +8,8 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([af672c7](https://github.com/JungYeoni/da-template/commit/af672c768815bc71ed5a65d499210b14f613f53e))
+- 설계 문서 ([c358489](https://github.com/JungYeoni/da-template/commit/c358489aadf4fa32b08f1adb19bb668583cb3108))
 - CHANGELOG 자동 업데이트 [skip ci] ([e91c4be](https://github.com/JungYeoni/da-template/commit/e91c4be85ee745f27dc6e9eb20bb068d1698bbeb))
 - 프로젝트 컨텍스트에 맞춰 리드미 수정 ([46adb5f](https://github.com/JungYeoni/da-template/commit/46adb5faafb1e6279a739ad407e537920036b697))
 - 프로젝트 컨텍스트 md 파일 추가 ([da3e1a6](https://github.com/JungYeoni/da-template/commit/da3e1a68fe11e9b494a549757fc917a6b64eaf0d))
