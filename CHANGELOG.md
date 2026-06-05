@@ -8,6 +8,7 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([c31a930](https://github.com/JungYeoni/da-template/commit/c31a930117ac3a4f245ff1e4c3848baf6e60b0ed))
 - 최종 제출 모형 반영 및 산출물 목록 정리 ([94cf07a](https://github.com/JungYeoni/da-template/commit/94cf07aa19fc346e67182a303e7bc282c311b827))
 - CHANGELOG 자동 업데이트 [skip ci] ([309e82f](https://github.com/JungYeoni/da-template/commit/309e82f82e9fdfb92d3391833fdc09e915900cd6))
 - CHANGELOG 자동 업데이트 [skip ci] ([029ba39](https://github.com/JungYeoni/da-template/commit/029ba39bc4b9fc902acd1e31f090c6364a95d4e3))
@@ -25,6 +26,7 @@
 
 ### 새 기능
 
+- LightGBM Regressor 회귀→분류 실험 추가 ([a1b3b66](https://github.com/JungYeoni/da-template/commit/a1b3b66f624c79dd297dd87443ef5812b089d740))
 - 모델링 파이프라인 및 분석 결과 추가 ([0526804](https://github.com/JungYeoni/da-template/commit/0526804e50367878d10c9017292f48fed9b74c8f))
 
 
