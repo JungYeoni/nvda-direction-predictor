@@ -8,6 +8,8 @@
 
 ### 문서
 
+- README 최신 상태로 업데이트 ([e8acb1e](https://github.com/JungYeoni/da-template/commit/e8acb1e5b8b80cbc333cd32a40c59d1f05f88878))
+- CHANGELOG 자동 업데이트 [skip ci] ([d5cbe0b](https://github.com/JungYeoni/da-template/commit/d5cbe0b0f8d6e613fa9a11e45ad9ec3c66e3029e))
 - CHANGELOG 자동 업데이트 [skip ci] ([713db47](https://github.com/JungYeoni/da-template/commit/713db47dbbd0d12f965b8e62ca848b69e329c34d))
 - CHANGELOG 자동 업데이트 [skip ci] ([af672c7](https://github.com/JungYeoni/da-template/commit/af672c768815bc71ed5a65d499210b14f613f53e))
 - 설계 문서 ([c358489](https://github.com/JungYeoni/da-template/commit/c358489aadf4fa32b08f1adb19bb668583cb3108))
