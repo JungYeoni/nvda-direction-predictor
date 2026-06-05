@@ -8,6 +8,7 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([d488d5a](https://github.com/JungYeoni/da-template/commit/d488d5a41156aff72cd8685d035b7f4b4ff253ff))
 - CHANGELOG 자동 업데이트 [skip ci] ([1750edc](https://github.com/JungYeoni/da-template/commit/1750edc3954e58e568f7890b4f17222739d728e0))
 - CHANGELOG 자동 업데이트 [skip ci] ([c31a930](https://github.com/JungYeoni/da-template/commit/c31a930117ac3a4f245ff1e4c3848baf6e60b0ed))
 - 최종 제출 모형 반영 및 산출물 목록 정리 ([94cf07a](https://github.com/JungYeoni/da-template/commit/94cf07aa19fc346e67182a303e7bc282c311b827))
@@ -31,6 +32,7 @@
 
 ### 새 기능
 
+- Huber 모형 threshold 민감도 분석 추가 ([eb3a431](https://github.com/JungYeoni/da-template/commit/eb3a431959b43e536e6a4aa3d3e552f713d4a3bd))
 - LightGBM Regressor 회귀→분류 실험 추가 ([a1b3b66](https://github.com/JungYeoni/da-template/commit/a1b3b66f624c79dd297dd87443ef5812b089d740))
 - 모델링 파이프라인 및 분석 결과 추가 ([0526804](https://github.com/JungYeoni/da-template/commit/0526804e50367878d10c9017292f48fed9b74c8f))
 
