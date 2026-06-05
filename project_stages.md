@@ -62,11 +62,21 @@
 ### 타겟 변수 정의
 
 ```
-y_t = 1  if NVDA_Close_{t+1} > NVDA_Close_t
-y_t = 0  if NVDA_Close_{t+1} <= NVDA_Close_t
+y_t = 1  if NVDA_Close_t > NVDA_Close_{t-1}   (오늘 상승)
+y_t = 0  if NVDA_Close_t <= NVDA_Close_{t-1}  (오늘 하락/보합)
 ```
 
-> `y_t`는 **내일 종가 방향**이므로 피처는 모두 당일 또는 그 이전 값만 사용해야 한다.
+**예측 시점**: t-1일 장 마감 후, t일 시장이 열리기 전  
+**사용 정보**: t-1일까지의 모든 시장 데이터 (X_t = shift(1) 적용)  
+**예측 대상**: t일 종가가 t-1일 종가보다 높을지 여부
+
+> 모든 피처는 `shift(1)` 적용으로 t-1일 값을 사용한다. t일 데이터는 예측 시점에 알 수 없으므로 피처로 사용하지 않는다.
+
+### 가격 변수 변환 원칙
+
+- `SOX_Close`, `TSM_Close`, `QQQ_Close`, `DXY_Close`, `MSFT_Close`, `META_Close` 등 외부 가격 변수는 모델 입력 전에 수익률 또는 변화율 변수로 변환한다.
+- `NVDA_Close` 원값은 타겟 생성과 파생 변수 계산에 사용하고, 최종 모델 입력에는 `NVDA_Return_1D`, `NVDA_MA20`, 이동평균 괴리율 등으로 대체하는 것을 우선한다.
+- `US_10Y_Yield`, `VIX_Close`, `US_CPI`는 원값과 변화량 중 Validation 성능 기준으로 선택한다.
 
 ### 체크리스트
 
@@ -74,6 +84,7 @@ y_t = 0  if NVDA_Close_{t+1} <= NVDA_Close_t
 - [ ] 타겟 클래스 비율 확인 (불균형 여부)
 - [ ] 이상치 탐지 (거래정지일 등)
 - [ ] 모든 피처가 `shift(1)` 이후 계산되었는지 검증
+- [ ] 가격 원값 feature가 수익률·변화율·괴리율로 변환되었는지 확인
 
 ### 산출물
 
@@ -109,7 +120,14 @@ y_t = 0  if NVDA_Close_{t+1} <= NVDA_Close_t
 
 ## 4단계 — 모형 학습
 
-**목표**: Logistic Regression을 baseline으로 먼저 확립하고, XGBoost로 성능을 개선한다.
+**목표**: 4개 모형을 비교하여 예측력 차이를 분석한다.
+
+| 모형 | 유형 | 역할 |
+|------|------|------|
+| Logistic Regression | 통계 | 해석 가능한 baseline |
+| XGBoost | 트리 앙상블 | 비선형 관계 포착 |
+| MLP | 신경망 | 딥러닝 baseline |
+| Dilated TCN | 시계열 신경망 | 멀티스케일 시간 패턴 포착 |
 
 ### 4-1. Logistic Regression (Baseline)
 
@@ -121,16 +139,36 @@ y_t = 0  if NVDA_Close_{t+1} <= NVDA_Close_t
 
 - 목적: 비선형 관계 포착 및 성능 개선
 - 튜닝 파라미터: `max_depth`, `learning_rate`, `n_estimators`, `subsample`
-- 탐색 방법: `optuna` 또는 `GridSearchCV` (Validation 기준)
+- 탐색 방법: `TimeSeriesSplit` 기반 튜닝 (Validation 기준)
+- 스케일링: Tree 기반 모형이므로 `StandardScaler` 사용하지 않음
 - Feature Importance 시각화 포함
+
+### 4-3. MLP
+
+- 목적: 딥러닝 baseline, 피처 간 비선형 조합 학습
+- 구조: FC Layer 3개 + Dropout + BatchNorm
+- 입력: 당일 피처 벡터 (tabular)
+- 스케일링: `StandardScaler` 적용
+
+### 4-4. Dilated TCN
+
+- 목적: 멀티스케일 시간 패턴 포착
+- 구조: Dilated Causal Conv1D (dilation=1,2,4,8) + FC
+- 입력: 과거 N일 시퀀스 윈도우
+- dilation 적용으로 단기(1~3일) + 중기(1~2주) 패턴 동시 학습
+- 스케일링: `StandardScaler` 적용
 
 ### 파이프라인 구조
 
 ```python
-Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", LogisticRegression(random_state=42)),
-])
+# LR
+Pipeline([("scaler", StandardScaler()), ("model", LogisticRegression(random_state=42))])
+
+# XGBoost
+XGBClassifier(random_state=42, eval_metric="logloss")
+
+# MLP / Dilated TCN
+# PyTorch 기반 구현, train/val loop 별도 관리
 ```
 
 ### 산출물
@@ -154,6 +192,15 @@ Pipeline([
 | Recall | 실제 상승을 얼마나 포착했는가 |
 | F1-Score | Precision-Recall 균형 (주요 기준) |
 | ROC-AUC | 임계값 무관 분리 성능 |
+
+### Naive Baseline
+
+| Baseline | 설명 |
+|----------|------|
+| Majority Class | Train 구간에서 가장 많은 클래스를 항상 예측 |
+| Yesterday Direction | 전일 NVDA 방향과 동일하게 다음 날 방향을 예측 |
+
+> 최종 모델은 위 baseline 대비 성능 개선 여부를 함께 보고한다.
 
 ### 추가 분석
 
@@ -179,11 +226,11 @@ Pipeline([
 
 | 파일 | 내용 |
 |------|------|
-| `notebooks/01_data_collection.ipynb` | yfinance + FRED 수집, raw 저장 |
-| `notebooks/02_eda.ipynb` | 분포, 상관관계, 이상치 탐색 |
-| `notebooks/03_feature_engineering.ipynb` | 파생 변수 생성, 타겟 정의 |
-| `notebooks/04_modeling.ipynb` | 학습, 튜닝, 비교 |
-| `notebooks/05_evaluation.ipynb` | 최종 평가 및 해석 |
+| `notebooks/data_collection.ipynb` | yfinance + FRED 수집, raw 저장 |
+| `notebooks/eda.ipynb` | 분포, 상관관계, 이상치 탐색 |
+| `notebooks/feature_engineering.ipynb` | 파생 변수 생성, 타겟 정의 |
+| `notebooks/modeling.ipynb` | 학습, 튜닝, 비교 |
+| `notebooks/evaluation.ipynb` | 최종 평가 및 해석 |
 
 ---
 
