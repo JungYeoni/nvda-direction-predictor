@@ -8,6 +8,8 @@
 
 ### 문서
 
+- 최종 제출 모형 반영 및 산출물 목록 정리 ([94cf07a](https://github.com/JungYeoni/da-template/commit/94cf07aa19fc346e67182a303e7bc282c311b827))
+- CHANGELOG 자동 업데이트 [skip ci] ([309e82f](https://github.com/JungYeoni/da-template/commit/309e82f82e9fdfb92d3391833fdc09e915900cd6))
 - CHANGELOG 자동 업데이트 [skip ci] ([029ba39](https://github.com/JungYeoni/da-template/commit/029ba39bc4b9fc902acd1e31f090c6364a95d4e3))
 - 프로젝트 개요 및 단계 문서 업데이트 ([fa9bdca](https://github.com/JungYeoni/da-template/commit/fa9bdca947bb2a850a6c86a108d18b213a2f3606))
 - CHANGELOG 자동 업데이트 [skip ci] ([8d99ed3](https://github.com/JungYeoni/da-template/commit/8d99ed3896adb64004d5f3164602cfb2b6cad0a7))
