@@ -8,6 +8,7 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([029ba39](https://github.com/JungYeoni/da-template/commit/029ba39bc4b9fc902acd1e31f090c6364a95d4e3))
 - 프로젝트 개요 및 단계 문서 업데이트 ([fa9bdca](https://github.com/JungYeoni/da-template/commit/fa9bdca947bb2a850a6c86a108d18b213a2f3606))
 - CHANGELOG 자동 업데이트 [skip ci] ([8d99ed3](https://github.com/JungYeoni/da-template/commit/8d99ed3896adb64004d5f3164602cfb2b6cad0a7))
 - README 최신 상태로 업데이트 ([e8acb1e](https://github.com/JungYeoni/da-template/commit/e8acb1e5b8b80cbc333cd32a40c59d1f05f88878))
