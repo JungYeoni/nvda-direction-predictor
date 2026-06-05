@@ -8,6 +8,7 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([1750edc](https://github.com/JungYeoni/da-template/commit/1750edc3954e58e568f7890b4f17222739d728e0))
 - CHANGELOG 자동 업데이트 [skip ci] ([c31a930](https://github.com/JungYeoni/da-template/commit/c31a930117ac3a4f245ff1e4c3848baf6e60b0ed))
 - 최종 제출 모형 반영 및 산출물 목록 정리 ([94cf07a](https://github.com/JungYeoni/da-template/commit/94cf07aa19fc346e67182a303e7bc282c311b827))
 - CHANGELOG 자동 업데이트 [skip ci] ([309e82f](https://github.com/JungYeoni/da-template/commit/309e82f82e9fdfb92d3391833fdc09e915900cd6))
@@ -23,6 +24,10 @@
 - 프로젝트 컨텍스트에 맞춰 리드미 수정 ([46adb5f](https://github.com/JungYeoni/da-template/commit/46adb5faafb1e6279a739ad407e537920036b697))
 - 프로젝트 컨텍스트 md 파일 추가 ([da3e1a6](https://github.com/JungYeoni/da-template/commit/da3e1a68fe11e9b494a549757fc917a6b64eaf0d))
 - CHANGELOG 자동 업데이트 [skip ci] ([5fdbdc9](https://github.com/JungYeoni/da-template/commit/5fdbdc90153f5e0de720ac3752ee080b73e93384))
+
+### 버그 수정
+
+- LightGBM feature names 수정 및 트리 회귀 한계 해석 추가 ([3a08886](https://github.com/JungYeoni/da-template/commit/3a0888681c5612c0ca1a495c70fa89bea0fae5b6))
 
 ### 새 기능
 
