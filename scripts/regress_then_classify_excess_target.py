@@ -31,6 +31,7 @@ from sklearn.metrics import (
     r2_score,
     roc_auc_score,
 )
+from lightgbm import LGBMRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
@@ -150,6 +151,21 @@ def make_model(model_name: str, params: dict):
             n_jobs=1,
             verbosity=0,
         )
+    if model_name == "LGBMRegressor":
+        return LGBMRegressor(
+            max_depth=int(params["max_depth"]),
+            learning_rate=params["learning_rate"],
+            n_estimators=int(params["n_estimators"]),
+            num_leaves=int(params["num_leaves"]),
+            min_child_samples=int(params["min_child_samples"]),
+            subsample=params["subsample"],
+            colsample_bytree=params["colsample_bytree"],
+            reg_alpha=params["reg_alpha"],
+            reg_lambda=params["reg_lambda"],
+            random_state=SEED,
+            n_jobs=1,
+            verbose=-1,
+        )
     raise ValueError(f"Unknown model: {model_name}")
 
 
@@ -202,6 +218,31 @@ def param_grid() -> list[tuple[str, dict]]:
                     "learning_rate": learning_rate,
                     "n_estimators": n_estimators,
                     "min_child_weight": min_child_weight,
+                    "subsample": subsample,
+                    "colsample_bytree": colsample_bytree,
+                    "reg_alpha": 0.1,
+                    "reg_lambda": 2.0,
+                },
+            )
+        )
+    for max_depth, learning_rate, n_estimators, num_leaves, min_child_samples, subsample, colsample_bytree in product(
+        [3, 5, 7],
+        [0.005, 0.01, 0.03],
+        [100, 200],
+        [15, 31, 63],
+        [10, 20, 50],
+        [0.6, 0.8, 1.0],
+        [0.6, 0.8, 1.0],
+    ):
+        grid.append(
+            (
+                "LGBMRegressor",
+                {
+                    "max_depth": max_depth,
+                    "learning_rate": learning_rate,
+                    "n_estimators": n_estimators,
+                    "num_leaves": num_leaves,
+                    "min_child_samples": min_child_samples,
                     "subsample": subsample,
                     "colsample_bytree": colsample_bytree,
                     "reg_alpha": 0.1,
