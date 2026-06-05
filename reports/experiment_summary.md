@@ -237,6 +237,19 @@ LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 �
 
 최종 제출 모형은 Accuracy, Precision, MCC가 가장 균형적인 Huber 회귀→분류 모형으로 유지한다.
 
+### Huber 모형 Threshold 민감도 분석
+
+같은 Huber 회귀 예측값으로 threshold를 바꿔가며 precision/coverage 트레이드오프를 분석했다.
+
+| 구분 | Threshold | 거래일 | 커버리지 | Precision | Recall | MCC |
+|------|-----------|--------|---------|-----------|--------|-----|
+| Val 선택 (최종 모형) | +0.126%p | 74일 | 32.9% | **0.595** | 0.427 | **0.192** |
+| Precision ≥ 0.60 시작 | +0.157%p | 70일 | 31.1% | 0.600 | 0.408 | 0.192 |
+| Precision ≥ 0.68 | +0.557%p | 31일 | 13.8% | 0.677 | 0.204 | 0.176 |
+| 최대 Precision | +0.792%p | 17일 | 7.6% | **0.765** | 0.126 | 0.176 |
+
+Val에서 선택한 threshold(+0.126%p)는 MCC 최대값과 일치해 올바르게 선택됐음을 확인한다. Threshold를 +0.5%p 이상으로 높이면 Precision 0.68~0.76까지 올라가지만 거래일이 연간 ~15일 수준으로 감소한다. 커버리지 30% 수준(val 선택값)이 Precision과 거래 횟수의 균형점이다.
+
 ---
 
 ## 한계점
@@ -285,7 +298,8 @@ LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 �
 | `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 |
 | `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 |
 | `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 |
-| `reports/results/regress_then_classify_summary.csv` | 회귀→분류 모델 비교 |
+| `reports/results/regress_then_classify_summary.csv` | 회귀→분류 모델 비교 (Huber/Ridge/ElasticNet/XGB/LGBM/HistGBR) |
+| `reports/results/threshold_sensitivity.csv` | Huber 모형 threshold별 precision/coverage 분석 |
 | `reports/results/model_comparison.png` | 모델 성능 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `reports/figures/final_assignment_prediction_correctness.png` | 최종 모형 예측 정오 시각화 |
@@ -296,6 +310,7 @@ LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 �
 | `scripts/run_target_variant_models.py` | 대체 타깃 × 전체 모델 비교 |
 | `scripts/tune_lr_xgb_excess_target.py` | LR/XGBoost 하이퍼파라미터 튜닝 |
 | `scripts/regress_then_classify_excess_target.py` | 회귀→분류 실험 |
+| `scripts/threshold_sensitivity.py` | Threshold 민감도 분석 |
 
 ### 노트북
 | 파일 | 설명 |
