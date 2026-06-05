@@ -79,6 +79,8 @@ NVIDIA는 **AI 인프라 기업 / 반도체 기업 / 미국 성장주** 세 가�
 
 이는 NVDA의 단순 방향보다 시장 대비 상대 강도를 예측하는 문제가 더 학습 가능할 수 있음을 시사한다.
 
+최종 과제 보고서에서는 한 단계 더 나아가 `NVDA - QQQ` 초과수익률을 먼저 회귀로 예측한 뒤 분류로 변환했다. 이 방식의 Huber Regression 모형은 test Accuracy **60.44%**, Precision **0.595**, MCC **0.192**를 기록해 최종 제출 모형으로 채택했다.
+
 ---
 
 ## 환경 설정
@@ -109,11 +111,16 @@ nvda-direction-predictor/
 │   ├── ablation.ipynb
 │   └── ensemble.ipynb
 ├── reports/
-│   ├── eda_summary.md
-│   ├── modeling_summary.md
+│   ├── final_assignment_report.md   # 최종 제출 보고서
 │   ├── experiment_summary.md
+│   ├── modeling_summary.md
+│   ├── tuning_process_summary.md
 │   ├── figures/
 │   └── results/
+├── scripts/
+│   ├── run_target_variant_models.py
+│   ├── tune_lr_xgb_excess_target.py
+│   └── regress_then_classify_excess_target.py
 └── src/
     ├── features/
     ├── modeling/

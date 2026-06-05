@@ -62,3 +62,21 @@ target = 1 if NVDA return - QQQ return > 0.2%p
 
 튜닝 결과, Logistic Regression은 Accuracy와 MCC가 개선되었고 최종 제출 모형으로 채택했다. XGBoost는 validation ROC-AUC 기준 상위 설정이 test에서 약하게 일반화되어 최종 모형에서 제외했다.
 
+## 회귀 후 분류 추가 실험
+
+방향만 분류하면 수익률 크기 정보가 사라진다는 한계를 보완하기 위해, 초과수익률 자체를 먼저 예측한 뒤 분류로 변환하는 실험을 추가했다.
+
+```text
+y_reg = NVDA return - QQQ return
+y_cls = 1 if y_reg > 0.2%p else 0
+```
+
+| 모델 | 방식 | Test Accuracy | Test Precision | Test ROC-AUC | Test MCC |
+|------|------|---------------|----------------|--------------|----------|
+| Huber | 회귀→분류 | **60.44%** | **0.595** | 0.578 | **0.192** |
+| Ridge | 회귀→분류 | 53.33% | 0.492 | 0.572 | 0.081 |
+| ElasticNet | 회귀→분류 | 55.56% | 0.518 | 0.570 | 0.093 |
+| XGBRegressor | 회귀→분류 | 57.33% | 0.621 | 0.554 | 0.126 |
+| HistGBR | 회귀→분류 | 48.44% | 0.416 | 0.486 | -0.061 |
+
+Huber Regression은 이상치에 덜 민감한 선형 회귀 방식이어서 NVDA 수익률의 급등락일 영향을 줄일 수 있다. 이 실험에서 Huber 회귀→분류가 Accuracy, Precision, MCC 기준으로 가장 좋은 성능을 보였으므로 최종 제출 모형을 기존 tuned LR에서 Huber 회귀→분류로 갱신했다.

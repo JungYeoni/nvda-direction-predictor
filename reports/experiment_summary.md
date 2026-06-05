@@ -218,6 +218,21 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가�
 
 ---
 
+## 회귀 후 분류 실험
+
+방향만 분류하면 수익률 크기 정보가 사라진다는 한계를 보완하기 위해 `NVDA 수익률 - QQQ 수익률` 자체를 먼저 회귀로 예측한 뒤, validation에서 선택한 threshold로 분류하는 실험을 추가했다.
+
+| 모델 | 방식 | Test Accuracy | Precision | ROC-AUC | MCC |
+|------|------|---------------|-----------|---------|-----|
+| **Huber** | 회귀→분류 | **60.44%** | **0.595** | 0.578 | **0.192** |
+| Ridge | 회귀→분류 | 53.33% | 0.492 | 0.572 | 0.081 |
+| ElasticNet | 회귀→분류 | 55.56% | 0.518 | 0.570 | 0.093 |
+| XGBRegressor | 회귀→분류 | 57.33% | 0.621 | 0.554 | 0.126 |
+
+Huber Regression은 극단적인 수익률 이상치의 영향력을 줄이는 선형 회귀 모델이다. NVDA처럼 실적 발표나 시장 충격으로 급등락하는 종목에서는 일반 회귀보다 안정적일 수 있다. 최종 제출 모형은 Accuracy, Precision, MCC가 가장 높은 Huber 회귀→분류 모형으로 갱신했다.
+
+---
+
 ## 한계점
 
 1. **거래 비용·슬리피지 미고려** — 실제 트레이딩 시스템에서는 성능이 낮아질 가능성
@@ -230,24 +245,58 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가�
 
 ## 산출물 목록
 
+### 데이터
 | 파일 | 설명 |
 |------|------|
 | `data/processed/features.csv` | 최종 피처 데이터셋 (22개 피처) |
 | `data/processed/train.csv` | 학습 데이터 |
 | `data/processed/val.csv` | 검증 데이터 |
 | `data/processed/test.csv` | 테스트 데이터 |
-| `models/lr_model.joblib` | LR 최종 모델 |
-| `models/xgb_model.joblib` | XGBoost 최종 모델 |
-| `models/mlp_model.pt` | MLP 최종 모델 |
-| `models/tcn_model.pt` | Dilated TCN 최종 모델 |
-| `reports/results/model_metrics.csv` | 최종 성능 지표 |
-| `reports/results/high_confidence_filter.csv` | 고확신 필터 분석 |
-| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
-| `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
-| `reports/results/target_variant_metrics.csv` | LR/XGBoost 대체 타깃 비교 실험 |
-| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 실험 |
-| `scripts/run_target_variant_models.py` | 대체 타깃 x 모델 비교 실행 스크립트 |
-| `reports/results/model_comparison.png` | 버전 비교 차트 |
+
+### 모델
+| 파일 | 설명 |
+|------|------|
+| `models/lr_model.joblib` | LR 모델 |
+| `models/xgb_model.joblib` | XGBoost 모델 |
+| `models/mlp_model.pt` | MLP 모델 |
+| `models/tcn_model.pt` | Dilated TCN 모델 |
+
+### 보고서
+| 파일 | 설명 |
+|------|------|
+| `reports/final_assignment_report.md` | **최종 제출 보고서** |
+| `reports/experiment_summary.md` | 실험 결과 종합 |
+| `reports/modeling_summary.md` | 모델 학습 결과 |
+| `reports/tuning_process_summary.md` | 튜닝 과정 기록 |
+
+### 결과 파일
+| 파일 | 설명 |
+|------|------|
+| `reports/results/final_assignment_model_metrics.csv` | 최종 제출 모형 성능 |
+| `reports/results/final_assignment_predictions.csv` | 최종 모형 test 예측값 |
+| `reports/results/model_metrics.csv` | v5 기본 모델 성능 |
+| `reports/results/target_variant_metrics.csv` | LR/XGBoost 대체 타깃 비교 |
+| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 |
+| `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 |
+| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 |
+| `reports/results/regress_then_classify_summary.csv` | 회귀→분류 모델 비교 |
+| `reports/results/model_comparison.png` | 모델 성능 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
-| `notebooks/modeling.ipynb` | 최종 모델링 노트북 |
-| `notebooks/eda.ipynb` | 최종 EDA 노트북 |
+| `reports/figures/final_assignment_prediction_correctness.png` | 최종 모형 예측 정오 시각화 |
+
+### 스크립트
+| 파일 | 설명 |
+|------|------|
+| `scripts/run_target_variant_models.py` | 대체 타깃 × 전체 모델 비교 |
+| `scripts/tune_lr_xgb_excess_target.py` | LR/XGBoost 하이퍼파라미터 튜닝 |
+| `scripts/regress_then_classify_excess_target.py` | 회귀→분류 실험 |
+
+### 노트북
+| 파일 | 설명 |
+|------|------|
+| `notebooks/data_collection.ipynb` | 데이터 수집 |
+| `notebooks/eda.ipynb` | 탐색적 데이터 분석 |
+| `notebooks/modeling.ipynb` | v5 모델링 |
+| `notebooks/evaluation.ipynb` | 모델 평가 |
+| `notebooks/ablation.ipynb` | Ablation study |
+| `notebooks/ensemble.ipynb` | 앙상블 실험 |

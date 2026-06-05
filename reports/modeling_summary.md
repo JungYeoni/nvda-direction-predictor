@@ -155,21 +155,20 @@ Validation 기준으로 선택하면 test precision 개선은 제한적이다. �
 
 | 파일 | 내용 |
 |------|------|
-| `models/lr_model.joblib` | LR 최종 모델 |
-| `models/xgb_model.joblib` | XGBoost 최종 모델 |
-| `models/mlp_model.pt` | MLP 최종 모델 |
-| `models/tcn_model.pt` | Dilated TCN 최종 모델 |
-| `data/processed/features.csv` | 최종 피처 데이터셋 |
-| `data/processed/train.csv` | 학습 데이터 |
-| `data/processed/val.csv` | 검증 데이터 |
-| `data/processed/test.csv` | 테스트 데이터 |
-| `reports/results/model_metrics.csv` | 최종 성능 지표 |
-| `reports/results/high_confidence_filter.csv` | 고확신 필터 분석 |
-| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
+| `reports/final_assignment_report.md` | **최종 제출 보고서** |
+| `reports/results/final_assignment_model_metrics.csv` | 최종 제출 모형 성능 |
+| `reports/results/final_assignment_predictions.csv` | 최종 모형 test 예측값 |
+| `reports/results/model_metrics.csv` | v5 기본 모델 성능 지표 |
 | `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
-| `reports/results/target_variant_metrics.csv` | 대체 타깃 비교 실험 |
-| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 실험 |
-| `scripts/run_target_variant_models.py` | 대체 타깃 x 모델 비교 실행 스크립트 |
-| `reports/results/model_comparison.png` | v4 vs v5 비교 차트 |
+| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 |
+| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
+| `reports/results/regress_then_classify_summary.csv` | 회귀→분류 모델 비교 |
+| `reports/results/model_comparison.png` | 모델 성능 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
-| `notebooks/modeling.ipynb` | 최종 모델링 노트북 |
+| `reports/figures/final_assignment_prediction_correctness.png` | 최종 모형 예측 정오 시각화 |
+| `data/processed/features.csv` | 최종 피처 데이터셋 |
+| `models/lr_model.joblib` | LR 모델 |
+| `models/xgb_model.joblib` | XGBoost 모델 |
+| `models/mlp_model.pt` | MLP 모델 |
+| `models/tcn_model.pt` | Dilated TCN 모델 |
+| `notebooks/modeling.ipynb` | v5 모델링 노트북 |
