@@ -259,9 +259,9 @@ def main() -> None:
     val_idx = (df.index >= "2023-07-01") & (df.index <= "2024-06-30")
     test_idx = df.index >= "2024-07-01"
 
-    X_train = df.loc[train_idx, feature_cols].values
-    X_val = df.loc[val_idx, feature_cols].values
-    X_test = df.loc[test_idx, feature_cols].values
+    X_train = df.loc[train_idx, feature_cols]
+    X_val = df.loc[val_idx, feature_cols]
+    X_test = df.loc[test_idx, feature_cols]
     y_train_reg = y_reg.loc[train_idx].values
     y_val_reg = y_reg.loc[val_idx].values
     y_test_reg = y_reg.loc[test_idx].values

@@ -231,7 +231,11 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가�
 | LGBMRegressor | 회귀→분류 | 55.56% | 0.800 | 0.523 | 0.104 |
 | HistGBR | 회귀→분류 | 48.44% | 0.416 | 0.486 | −0.061 |
 
-Huber Regression은 극단적인 수익률 이상치의 영향력을 줄이는 선형 회귀 모델이다. NVDA처럼 실적 발표나 시장 충격으로 급등락하는 종목에서는 일반 회귀보다 안정적일 수 있다. LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 사실상 상승 신호를 거의 내지 않는 보수적 모형이며, ROC-AUC 0.523으로 종합 판별력은 Huber에 미치지 못한다. 최종 제출 모형은 Accuracy, Precision, MCC가 가장 균형적인 Huber 회귀→분류 모형으로 유지한다.
+Huber Regression은 극단적인 수익률 이상치의 영향력을 줄이는 선형 회귀 모델이다. NVDA처럼 실적 발표나 시장 충격으로 급등락하는 종목에서는 일반 회귀보다 안정적일 수 있다.
+
+LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 신호를 거의 내지 않는 극단적 보수 모형이다. 더 근본적으로 LightGBM을 포함한 트리 기반 회귀(XGBRegressor, HistGBR, LGBMRegressor) 모두 `val_roc_auc ≤ 0.50`으로, 학습 패턴이 validation에서 반전된다. Train 875일의 제한된 샘플에서 트리가 과적합하기 때문으로 판단된다. 선형 모델(Huber/Ridge/ElasticNet)은 `val_roc_auc > 0.50`을 안정적으로 유지하며, 이 데이터 크기에서는 선형 회귀가 적합함을 재확인한다.
+
+최종 제출 모형은 Accuracy, Precision, MCC가 가장 균형적인 Huber 회귀→분류 모형으로 유지한다.
 
 ---
 
