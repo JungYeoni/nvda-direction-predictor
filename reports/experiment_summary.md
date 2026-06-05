@@ -199,18 +199,20 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가�
 
 ---
 
-## 대체 타깃 실험
+## 대체 타깃 전체 모델 실험
 
-기존 방향 타깃은 작은 상승과 큰 상승을 모두 같은 `1`로 처리한다. 같은 feature와 동일한 train/validation/test split을 유지하고 타깃만 변경해, 더 예측 가능한 문제 정의가 있는지 확인했다.
+기존 방향 타깃은 작은 상승과 큰 상승을 모두 같은 `1`로 처리한다. 같은 feature와 동일한 train/validation/test split을 유지하고 타깃만 변경해, 더 예측 가능한 문제 정의가 있는지 확인했다. 모델은 LR, XGBoost, MLP, TCN, LSTM, GRU, iTransformer-style classifier를 비교했다. 시퀀스 모델은 `window=20`과 market-only 18개 feature를 사용했기 때문에 test n은 205일이다.
 
-| 타깃 | 모델 | Test pos rate | Majority baseline | Accuracy | Balanced Acc | ROC-AUC | MCC |
-|------|------|---------------|-------------------|----------|--------------|---------|-----|
-| `current_direction`: NVDA return > 0 | LR | 52.4% | 52.44% | 53.33% | 0.528 | 0.558 | 0.058 |
-| `abs_return_gt_0.2pct`: NVDA return > 0.2% | LR | 51.1% | 51.11% | 52.89% | 0.527 | 0.573 | 0.055 |
-| `excess_qqq_gt_0`: NVDA return - QQQ return > 0 | LR | 48.9% | 51.11% | 56.44% | 0.564 | 0.592 | 0.128 |
-| **`excess_qqq_gt_0.2pct`: NVDA return - QQQ return > 0.2%p** | **LR** | **45.8%** | **54.22%** | **57.33%** | **0.574** | **0.610** | **0.148** |
+| 순위 | 타깃 | 모델 | Test n | Accuracy | Balanced Acc | ROC-AUC | MCC |
+|------|------|------|--------|----------|--------------|---------|-----|
+| 1 | `excess_qqq_gt_0.2pct` | LR | 225 | 57.33% | 0.574 | 0.610 | 0.148 |
+| 2 | `excess_qqq_gt_0` | XGBoost | 225 | 56.00% | 0.553 | 0.601 | 0.135 |
+| 3 | `excess_qqq_gt_0.2pct` | MLP | 225 | 52.44% | 0.537 | 0.595 | 0.076 |
+| 4 | `excess_qqq_gt_0.2pct` | LSTM | 205 | 54.15% | 0.556 | 0.594 | 0.127 |
+| 5 | `excess_qqq_gt_0` | LR | 225 | 56.44% | 0.564 | 0.592 | 0.128 |
+| 기준 | `current_direction` | LR | 225 | 53.33% | 0.528 | 0.558 | 0.058 |
 
-가장 유망한 타깃은 `NVDA 수익률 - QQQ 수익률 > 0.2%p`였다. 기존 방향 타깃의 LR ROC-AUC 0.558 대비 0.610으로 개선되었고, balanced accuracy와 MCC도 함께 상승했다. 이는 NVDA의 절대 방향보다 시장 대비 상대 강도 예측이 더 학습 가능한 문제일 수 있음을 의미한다.
+가장 유망한 조합은 `NVDA 수익률 - QQQ 수익률 > 0.2%p` 타깃의 Logistic Regression이었다. 기존 방향 타깃의 LR ROC-AUC 0.558 대비 0.610으로 개선되었고, balanced accuracy와 MCC도 함께 상승했다. iTransformer-style 모델은 `abs_return_gt_0.2pct`에서 ROC-AUC 0.578로 일부 개선을 보였지만, 초과수익 타깃에서는 LR/LSTM/MLP보다 낮았다.
 
 다만 이 결과는 타깃 재정의 실험이므로, 기존 "NVDA가 오르는가" 문제와 직접 같은 목표가 아니다. 전략 관점에서는 long NVDA / hedge QQQ 또는 NVDA overweight 판단에 더 가깝다.
 
@@ -242,7 +244,9 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가�
 | `reports/results/high_confidence_filter.csv` | 고확신 필터 분석 |
 | `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
 | `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
-| `reports/results/target_variant_metrics.csv` | 대체 타깃 비교 실험 |
+| `reports/results/target_variant_metrics.csv` | LR/XGBoost 대체 타깃 비교 실험 |
+| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 실험 |
+| `scripts/run_target_variant_models.py` | 대체 타깃 x 모델 비교 실행 스크립트 |
 | `reports/results/model_comparison.png` | 버전 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `notebooks/modeling.ipynb` | 최종 모델링 노트북 |

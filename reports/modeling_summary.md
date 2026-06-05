@@ -135,16 +135,19 @@ Validation 기준으로 선택하면 test precision 개선은 제한적이다. �
 
 ---
 
-## 11. 추가 타깃 실험
+## 11. 추가 타깃 전체 모델 실험
 
-같은 feature와 split에서 타깃만 바꾼 실험에서는 `NVDA 수익률 - QQQ 수익률 > 0.2%p` 타깃이 가장 좋은 결과를 보였다.
+같은 feature와 split에서 타깃만 바꾼 실험에서는 `NVDA 수익률 - QQQ 수익률 > 0.2%p` 타깃이 가장 좋은 결과를 보였다. 추가 비교에는 LR, XGBoost, MLP, TCN, LSTM, GRU, iTransformer-style classifier를 포함했다.
 
-| 타깃 | 모델 | Accuracy | Balanced Acc | ROC-AUC | MCC |
-|------|------|----------|--------------|---------|-----|
-| 기존 방향: NVDA return > 0 | LR | 53.33% | 0.528 | 0.558 | 0.058 |
-| **QQQ 초과: NVDA - QQQ > 0.2%p** | **LR** | **57.33%** | **0.574** | **0.610** | **0.148** |
+| 순위 | 타깃 | 모델 | Test n | Accuracy | Balanced Acc | ROC-AUC | MCC |
+|------|------|------|--------|----------|--------------|---------|-----|
+| 1 | QQQ 초과: NVDA - QQQ > 0.2%p | LR | 225 | 57.33% | 0.574 | 0.610 | 0.148 |
+| 2 | QQQ 초과: NVDA - QQQ > 0 | XGBoost | 225 | 56.00% | 0.553 | 0.601 | 0.135 |
+| 3 | QQQ 초과: NVDA - QQQ > 0.2%p | MLP | 225 | 52.44% | 0.537 | 0.595 | 0.076 |
+| 4 | QQQ 초과: NVDA - QQQ > 0.2%p | LSTM | 205 | 54.15% | 0.556 | 0.594 | 0.127 |
+| 기준 | 기존 방향: NVDA return > 0 | LR | 225 | 53.33% | 0.528 | 0.558 | 0.058 |
 
-이 결과는 절대 방향 예측보다 시장 대비 상대 강도 예측이 더 학습 가능할 수 있음을 보여준다. 단, 투자 해석은 "NVDA 상승 여부"가 아니라 "NVDA의 QQQ 대비 초과 성과 여부"에 가깝다.
+이 결과는 절대 방향 예측보다 시장 대비 상대 강도 예측이 더 학습 가능할 수 있음을 보여준다. 단, 투자 해석은 "NVDA 상승 여부"가 아니라 "NVDA의 QQQ 대비 초과 성과 여부"에 가깝다. 시퀀스 모델 중에서는 LSTM이 초과수익 +0.2%p 타깃에서 ROC-AUC 0.594로 가장 좋았지만, LR을 넘지는 못했다.
 
 ---
 
@@ -165,6 +168,8 @@ Validation 기준으로 선택하면 test precision 개선은 제한적이다. �
 | `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
 | `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
 | `reports/results/target_variant_metrics.csv` | 대체 타깃 비교 실험 |
+| `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 실험 |
+| `scripts/run_target_variant_models.py` | 대체 타깃 x 모델 비교 실행 스크립트 |
 | `reports/results/model_comparison.png` | v4 vs v5 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `notebooks/modeling.ipynb` | 최종 모델링 노트북 |
