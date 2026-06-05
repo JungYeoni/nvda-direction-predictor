@@ -10,7 +10,7 @@
 from pathlib import Path
 
 import joblib
-from sklearn.model_selection import StratifiedKFold, cross_val_score
+from sklearn.model_selection import TimeSeriesSplit, cross_val_score
 from sklearn.pipeline import Pipeline
 
 RANDOM_STATE = 42
@@ -35,7 +35,7 @@ def evaluate_models(
     Returns:
         dict: {"모델명": {"mean": float, "std": float}}
     """
-    cv = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=RANDOM_STATE)
+    cv = TimeSeriesSplit(n_splits=cv_folds)
     results = {}
 
     for name, model in models.items():

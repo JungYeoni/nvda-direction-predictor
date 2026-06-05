@@ -93,11 +93,18 @@ def compute_psi(expected: pd.Series, actual: pd.Series, bins: int = 10) -> float
         0.1~0.2: 약간의 변화
         > 0.2  : 심각한 드리프트 — 재학습 또는 피처 점검 필요
     """
-    breakpoints = np.linspace(
-        min(expected.min(), actual.min()),
-        max(expected.max(), actual.max()),
-        bins + 1,
-    )
+    expected = expected.dropna()
+    actual = actual.dropna()
+
+    if expected.empty or actual.empty:
+        return float("nan")
+
+    min_value = min(expected.min(), actual.min())
+    max_value = max(expected.max(), actual.max())
+    if min_value == max_value:
+        return 0.0
+
+    breakpoints = np.linspace(min_value, max_value, bins + 1)
     exp_pct = np.histogram(expected, bins=breakpoints)[0] / len(expected)
     act_pct = np.histogram(actual, bins=breakpoints)[0] / len(actual)
 

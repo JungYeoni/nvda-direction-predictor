@@ -83,3 +83,13 @@ class TestComputePsi:
     def test_returns_float(self, sample_tabular):
         psi = compute_psi(sample_tabular["feature_a"], sample_tabular["feature_b"])
         assert isinstance(psi, float)
+
+    def test_constant_distributions(self):
+        """상수 분포는 bin 경계가 중복되어도 실패하지 않아야 함."""
+        psi = compute_psi(pd.Series([1, 1, 1]), pd.Series([1, 1, 1]))
+        assert psi == 0.0
+
+    def test_empty_distribution_returns_nan(self):
+        """빈 입력은 계산 불가 상태를 NaN으로 반환."""
+        psi = compute_psi(pd.Series(dtype=float), pd.Series([1, 2, 3]))
+        assert np.isnan(psi)

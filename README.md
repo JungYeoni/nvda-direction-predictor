@@ -1,11 +1,11 @@
 # nvda-direction-predictor
 
-NVIDIA(NVDA) 내일 종가 방향을 예측하는 이진 분류 프로젝트입니다.
+NVIDIA(NVDA)의 다음 거래일 종가 방향을 예측하는 이진 분류 프로젝트입니다.
 
 | 항목 | 내용 |
 |------|------|
 | 예측 종목 | NVIDIA Corporation (NVDA, NASDAQ) |
-| 예측 대상 | 내일 종가의 방향 (상승: 1 / 하락·보합: 0) |
+| 예측 대상 | 다음 거래일 종가 방향 (상승: 1 / 하락·보합: 0) |
 | 문제 유형 | 이진 분류 (Binary Classification) |
 | 데이터 기간 | 2020.01.09 ~ 2025.05.22 |
 | 사용 모형 | Logistic Regression, XGBoost, MLP, Dilated TCN |
@@ -47,21 +47,23 @@ NVIDIA는 **AI 인프라 기업 / 반도체 기업 / 미국 성장주** 세 가�
 | 매크로 | US_10Y_Yield, DXY_Return, US_CPI |
 | 이벤트 캘린더 | is_nvda_post_earnings, is_nvda_earnings_eve, is_fomc_day, is_cpi_day |
 
-시장 데이터는 lookahead 방지를 위해 `shift(1)` 적용, 캘린더 피처는 사전에 알려진 일정이므로 shift 없음.
+시장 데이터는 lookahead 방지를 위해 `shift(1)` 적용, 캘린더 피처는 사전에 알려진 일정이므로 shift 없음. 즉 `X_t`는 전일 장마감까지의 정보이고, `y_t`는 당일 종가가 전일 종가보다 상승했는지 여부입니다.
 
 ---
 
-## 최종 성능 (Test Set, 2024.07 ~ 2025.05)
+## 최종 성능 해석 (Test Set, 2024.07 ~ 2025.05)
 
 | 모델 | Accuracy | ROC-AUC | F1 |
 |------|----------|---------|----|
-| Logistic Regression | 52.44% | 0.558 | 0.686 |
+| **Logistic Regression** | 52.44% | **0.558** | 0.686 |
 | XGBoost | 52.44% | 0.506 | 0.658 |
 | MLP | 52.44% | 0.536 | 0.688 |
-| **Dilated TCN** | **53.17%** | 0.466 | **0.694** |
+| Dilated TCN | 53.17% | 0.466 | 0.694 |
 | Majority baseline | 52.4% | — | — |
 
-고확신 필터 적용 시 (XGBoost, threshold=0.52): **Precision 56.3%**, 커버리지 64%
+최종 해석은 ROC-AUC 기준으로 가장 안정적인 **Logistic Regression**을 중심으로 한다. Dilated TCN은 F1과 Accuracy가 높지만 `Recall=1.0`, `ROC-AUC=0.466`으로 상승 예측에 치우친 퇴화 신호가 있어 최종 우위 모델로 보지 않는다.
+
+고확신 필터는 validation 기준으로 threshold를 선택하면 XGBoost `threshold=0.49`, test precision 52.8%, coverage 86.7%가 나온다. 기존 `threshold=0.52`의 test precision 56.3%는 test 기준 사후 선택 성격이 있어 최종 성능으로 사용하지 않는다.
 
 ---
 

@@ -102,6 +102,8 @@
 **평가 기준**: Validation F1-Score로 튜닝 → Test로 최종 평가  
 **Test Majority baseline: 52.4%**
 
+최종 해석은 Accuracy/F1보다 ROC-AUC, balanced accuracy, 퇴화 여부를 우선한다. 특히 TCN은 `window=20`으로 test 앞 20일을 제외한 205일 기준으로 평가되므로, TCN 해석에는 aligned majority baseline 53.17%를 함께 사용한다.
+
 ---
 
 ## 버전별 Test 성능 비교
@@ -166,7 +168,7 @@
 | is_fomc_day | 캘린더 | p=0.055 (경계선) |
 | is_cpi_day | 캘린더 | p=0.546 (유의미하지 않음) |
 
-- TCN Accuracy 53.17% (v4 대비 +0.49%p 개선)
+- TCN Accuracy 53.17% (v4 대비 +0.49%p 개선), 단 aligned majority baseline도 53.17%
 - `is_nvda_post_earnings`: 실적 발표 다음 날 평균 수익률 +2.65% vs 비이벤트 +0.26%, 통계적 유의
 - 캘린더 피처의 모델 기여는 제한적 (이벤트 발생 횟수 부족: 19~64일)
 
@@ -186,8 +188,14 @@ XGBoost 중요도 2위 진입. 변동성 레짐 정보가 방향 예측에 기�
 ### 4. 단순 모델(LR)이 일관된 ROC-AUC 상위
 ROC-AUC 기준으로 v2~v5 전 버전에서 LR이 최상위 또는 최상위권. 노이즈 강한 금융 시계열에서 과적합 없이 일반화.
 
-### 5. 일별 방향 예측의 구조적 상한
-EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한. 고확신 필터(thr=0.52)로 Precision 56.3% 달성 가능하나 커버리지 64%로 감소.
+### 5. TCN은 재설계로 퇴화 완화 가능
+기존 v5 TCN은 F1이 높지만 `Recall=1.0`, `ROC-AUC=0.466`으로 상승 예측에 치우친 퇴화 신호가 있다. 추가 실험에서 캘린더 dummy를 제외하고 `pos_weight`를 제거한 뒤 Validation ROC-AUC로 best epoch를 선택하면 test ROC-AUC가 0.522로 회복되었다. 다만 LR의 ROC-AUC 0.558에는 미치지 못한다.
+
+### 6. 고확신 필터의 실질 개선은 제한적
+기존 `threshold=0.52`의 Precision 56.3%는 test 구간을 보고 선택한 사후 threshold 성격이 있다. Validation precision 기준으로 threshold를 선택하면 `threshold=0.49`, test precision 52.8%, coverage 86.7%로 개선 폭이 제한적이다.
+
+### 7. 일별 방향 예측의 구조적 상한
+EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한에 가깝다.
 
 ---
 
@@ -215,6 +223,8 @@ EMH 하에서 공개 정보 기반 52~55% 정확도가 현실적 상한. 고확�
 | `models/tcn_model.pt` | Dilated TCN 최종 모델 |
 | `reports/results/model_metrics.csv` | 최종 성능 지표 |
 | `reports/results/high_confidence_filter.csv` | 고확신 필터 분석 |
+| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
+| `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
 | `reports/results/model_comparison.png` | 버전 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `notebooks/modeling.ipynb` | 최종 모델링 노트북 |

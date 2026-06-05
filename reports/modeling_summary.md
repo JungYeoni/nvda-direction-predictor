@@ -12,7 +12,7 @@
 | Validation | 2023-07-01 ~ 2024-06-30 (250일) |
 | Test | 2024-07-01 ~ 2025-05-22 (225일) |
 | 피처 수 | 22개 (시장 18 + 캘린더 4) |
-| 튜닝 기준 | Validation F1-Score |
+| 튜닝 기준 | Validation F1-Score (기존 최종 모델), 추가 TCN 재설계는 Validation ROC-AUC |
 | Majority baseline | 52.4% (항상 상승 예측) |
 
 ---
@@ -48,8 +48,10 @@
 | LR | 52.44% | 0.525 | 0.992 | 0.686 | 0.558 |
 | XGBoost | 52.44% | 0.528 | 0.873 | 0.658 | **0.506** |
 | MLP | 52.44% | 0.524 | 1.000 | 0.688 | 0.536 |
-| **Dilated TCN** | **53.17%** | 0.532 | 1.000 | **0.694** | 0.466 |
+| Dilated TCN | 53.17% | 0.532 | 1.000 | 0.694 | 0.466 |
 | Majority baseline | 52.4% | — | — | — | — |
+
+ROC-AUC 기준으로는 Logistic Regression이 가장 안정적이다. Dilated TCN은 Accuracy와 F1이 높지만 `Recall=1.000`, `ROC-AUC=0.466`으로 상승 클래스에 치우친 퇴화 신호가 있어 최종 우위 모델로 해석하지 않는다. 또한 TCN은 `window=20` 때문에 test 앞 20일을 제외한 205일 기준으로 평가되며, 해당 aligned majority baseline은 53.17%다.
 
 ---
 
@@ -78,11 +80,15 @@
 
 ---
 
-## 7. 고확신 필터 (XGBoost, thr=0.52)
+## 7. 고확신 필터 재검증 (XGBoost)
 
-- **Precision: 56.3%** (Majority baseline 52.4% 대비 +3.9%p)
-- 커버리지: 64% (225일 중 144일 거래)
-- 신호가 없는 날은 포지션 미보유
+기존 `threshold=0.52`는 test 구간 precision을 보고 사후 선택한 성격이 있어 최종 성능으로 사용하지 않는다. Validation에서 threshold를 선택한 뒤 test에 1회 적용하는 방식으로 재검증했다.
+
+| 선택 기준 | threshold | Val precision | Val coverage | Test precision | Test coverage |
+|-----------|-----------|---------------|--------------|----------------|---------------|
+| Val precision 최대, coverage ≥ 50% | 0.49 | 58.1% | 96.4% | 52.8% | 86.7% |
+
+Validation 기준으로 선택하면 test precision 개선은 제한적이다. 따라서 고확신 필터는 보조 분석으로만 제시하고, 최종 모델 우위 근거로 사용하지 않는다.
 
 ---
 
@@ -105,17 +111,31 @@
 
 ---
 
-## 9. 주요 발견
+## 9. TCN 재설계 실험
+
+기존 TCN은 `pos_weight=3.0`, Validation F1 기준 best epoch 선택, 캘린더 dummy 포함으로 인해 상승 예측에 치우쳤다. 추가 실험에서는 best epoch를 Validation ROC-AUC로 선택하고, threshold는 Validation balanced accuracy 기준으로 정했다.
+
+| TCN variant | Feature | pos_weight | Test n | Aligned baseline | Accuracy | Balanced Acc | F1 | MCC | ROC-AUC |
+|-------------|---------|------------|--------|------------------|----------|--------------|----|-----|---------|
+| 기존 v5 | 전체 22개 | 3.0 | 205 | 53.17% | 53.17% | — | 0.694 | — | 0.466 |
+| 재설계 best | 시장 피처 18개 | 없음 | 205 | 53.17% | 54.15% | 0.538 | 0.580 | 0.076 | 0.522 |
+
+재설계 TCN은 all-up 퇴화가 줄고 ROC-AUC가 0.522로 회복되었지만, LR의 ROC-AUC 0.558에는 미치지 못했다. 따라서 TCN은 추가 연구 후보로 남기되, 현재 최종 결론은 LR 중심으로 둔다.
+
+---
+
+## 10. 주요 발견
 
 1. **Return 변환이 가장 효과적** — v1→v2에서 TCN Accuracy +2.0%p, LR ROC-AUC +0.028 개선
 2. **실현 변동성이 유용한 피처** — XGBoost 중요도 2위 진입
 3. **이벤트 더미는 샘플 수 부족으로 제한적** — 실적 이후 수익률 통계는 유의미하나 연간 4회에 불과
-4. **고확신 필터가 Precision 개선에 효과적** — thr=0.52에서 56.3% 달성
-5. **일별 방향 예측의 천장** — EMH 하에서 55% 이상의 일관된 정확도는 구조적으로 달성하기 어려움
+4. **고확신 필터의 실질 개선은 제한적** — validation 기준 threshold 선택 시 test precision 52.8%
+5. **TCN은 재설계로 개선 가능하나 최종 우위는 아님** — 시장 피처만 사용하면 ROC-AUC 0.522로 회복되지만 LR보다 낮음
+6. **일별 방향 예측의 천장** — EMH 하에서 55% 이상의 일관된 정확도는 구조적으로 달성하기 어려움
 
 ---
 
-## 10. 산출물
+## 11. 산출물
 
 | 파일 | 내용 |
 |------|------|
@@ -129,6 +149,8 @@
 | `data/processed/test.csv` | 테스트 데이터 |
 | `reports/results/model_metrics.csv` | 최종 성능 지표 |
 | `reports/results/high_confidence_filter.csv` | 고확신 필터 분석 |
+| `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
+| `reports/results/tcn_redesign_metrics.csv` | TCN 재설계 비교 실험 |
 | `reports/results/model_comparison.png` | v4 vs v5 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `notebooks/modeling.ipynb` | 최종 모델링 노트북 |
