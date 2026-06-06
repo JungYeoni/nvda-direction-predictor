@@ -8,6 +8,7 @@
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([e284678](https://github.com/JungYeoni/da-template/commit/e284678d3bb47a1b6d3cc67481b7594e8188d54c))
 - CHANGELOG 자동 업데이트 [skip ci] ([d488d5a](https://github.com/JungYeoni/da-template/commit/d488d5a41156aff72cd8685d035b7f4b4ff253ff))
 - CHANGELOG 자동 업데이트 [skip ci] ([1750edc](https://github.com/JungYeoni/da-template/commit/1750edc3954e58e568f7890b4f17222739d728e0))
 - CHANGELOG 자동 업데이트 [skip ci] ([c31a930](https://github.com/JungYeoni/da-template/commit/c31a930117ac3a4f245ff1e4c3848baf6e60b0ed))
