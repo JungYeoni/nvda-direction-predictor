@@ -27,7 +27,6 @@ dependencies = [
     # 금융 데이터
     "yfinance>=0.2",
     "fredapi>=0.5",
-    "ta>=0.11",
     # 설정
     "pyyaml>=6.0",
     "python-dotenv>=1.0",
