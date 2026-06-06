@@ -6,7 +6,13 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score, balanced_accuracy_score, matthews_corrcoef, precision_score, recall_score
+from sklearn.metrics import (
+    accuracy_score,
+    balanced_accuracy_score,
+    matthews_corrcoef,
+    precision_score,
+    recall_score,
+)
 
 plt.rcParams["font.family"] = "AppleGothic"
 plt.rcParams["axes.unicode_minus"] = False
@@ -74,9 +80,11 @@ ax.plot(df["coverage_pct"], df["precision"], color="#333333", linewidth=1.8)
 ax.axhline(majority_baseline, color="gray", linestyle="--", linewidth=1, label=f"Majority baseline ({majority_baseline*100:.1f}%)")
 for label, row in label_points.items():
     ax.scatter(row["coverage_pct"], row["precision"], s=70, zorder=5, color=palette[label], label=label)
-ax.set_xlabel("커버리지 (%)"); ax.set_ylabel("Precision")
+ax.set_xlabel("커버리지 (%)")
+ax.set_ylabel("Precision")
 ax.set_title("① Precision vs 커버리지")
-ax.legend(fontsize=7.5); ax.grid(True, alpha=0.3)
+ax.legend(fontsize=7.5)
+ax.grid(True, alpha=0.3)
 
 # ② MCC vs Coverage
 ax = axes[0, 1]
@@ -84,18 +92,22 @@ ax.plot(df["coverage_pct"], df["mcc"], color="#333333", linewidth=1.8)
 ax.axhline(0, color="gray", linestyle="--", linewidth=1, label="MCC=0 (랜덤)")
 for label, row in label_points.items():
     ax.scatter(row["coverage_pct"], row["mcc"], s=70, zorder=5, color=palette[label], label=label)
-ax.set_xlabel("커버리지 (%)"); ax.set_ylabel("MCC")
+ax.set_xlabel("커버리지 (%)")
+ax.set_ylabel("MCC")
 ax.set_title("② MCC vs 커버리지")
-ax.legend(fontsize=7.5); ax.grid(True, alpha=0.3)
+ax.legend(fontsize=7.5)
+ax.grid(True, alpha=0.3)
 
 # ③ Precision & Recall vs Threshold
 ax = axes[1, 0]
 ax.plot(df["threshold"] * 100, df["precision"], label="Precision", color="#d62728", linewidth=1.8)
 ax.plot(df["threshold"] * 100, df["recall"],    label="Recall",    color="#1f77b4", linewidth=1.8)
 ax.axvline(val_thr * 100, color="#2ca02c", linestyle="--", linewidth=1.2, label=f"Val threshold ({val_thr*100:.3f}%p)")
-ax.set_xlabel("Threshold (초과수익률 %p)"); ax.set_ylabel("Score")
+ax.set_xlabel("Threshold (초과수익률 %p)")
+ax.set_ylabel("Score")
 ax.set_title("③ Precision / Recall vs Threshold")
-ax.legend(fontsize=8); ax.grid(True, alpha=0.3)
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3)
 ax.xaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
 
 # ④ 거래 횟수 vs Threshold
@@ -103,9 +115,11 @@ ax = axes[1, 1]
 ax.bar(df["threshold"] * 100, df["n_trades"], width=(df["threshold"].max() - df["threshold"].min()) / len(df) * 100,
        color="#4C72B0", alpha=0.7)
 ax.axvline(val_thr * 100, color="#2ca02c", linestyle="--", linewidth=1.2, label=f"Val threshold ({val_thr*100:.3f}%p)")
-ax.set_xlabel("Threshold (초과수익률 %p)"); ax.set_ylabel("거래 횟수 (일)")
+ax.set_xlabel("Threshold (초과수익률 %p)")
+ax.set_ylabel("거래 횟수 (일)")
 ax.set_title("④ 거래 횟수 vs Threshold")
-ax.legend(fontsize=8); ax.grid(True, alpha=0.3, axis="y")
+ax.legend(fontsize=8)
+ax.grid(True, alpha=0.3, axis="y")
 ax.xaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
 
 plt.tight_layout()

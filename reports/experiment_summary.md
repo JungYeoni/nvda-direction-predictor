@@ -235,7 +235,7 @@ Huber Regression은 극단적인 수익률 이상치의 영향력을 줄이는 �
 
 LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 신호를 거의 내지 않는 극단적 보수 모형이다. 더 근본적으로 LightGBM을 포함한 트리 기반 회귀(XGBRegressor, HistGBR, LGBMRegressor) 모두 `val_roc_auc ≤ 0.50`으로, 학습 패턴이 validation에서 반전된다. Train 875일의 제한된 샘플에서 트리가 과적합하기 때문으로 판단된다. 선형 모델(Huber/Ridge/ElasticNet)은 `val_roc_auc > 0.50`을 안정적으로 유지하며, 이 데이터 크기에서는 선형 회귀가 적합함을 재확인한다.
 
-최종 제출 모형은 Accuracy, Precision, MCC가 가장 균형적인 Huber 회귀→분류 모형으로 유지한다.
+최종 제출 모형은 Accuracy와 MCC가 가장 높고 Precision도 안정적인 Huber 회귀→분류 모형으로 유지한다.
 
 ### Huber 모형 Threshold 민감도 분석
 
@@ -248,7 +248,7 @@ LGBMRegressor는 Precision 0.800으로 가장 높지만 Recall 0.039로 상승 �
 | Precision ≥ 0.68 | +0.557%p | 31일 | 13.8% | 0.677 | 0.204 | 0.176 |
 | 최대 Precision | +0.792%p | 17일 | 7.6% | **0.765** | 0.126 | 0.176 |
 
-Val에서 선택한 threshold(+0.126%p)는 MCC 최대값과 일치해 올바르게 선택됐음을 확인한다. Threshold를 +0.5%p 이상으로 높이면 Precision 0.68~0.76까지 올라가지만 거래일이 연간 ~15일 수준으로 감소한다. 커버리지 30% 수준(val 선택값)이 Precision과 거래 횟수의 균형점이다.
+Val에서 선택한 threshold(+0.126%p)는 test 구간 사후 민감도 분석에서도 MCC가 높은 구간에 위치했다. Threshold를 +0.5%p 이상으로 높이면 Precision 0.68~0.76까지 올라가지만 거래일이 연간 ~15일 수준으로 감소한다. 커버리지 30% 수준(val 선택값)이 Precision과 거래 횟수의 현실적인 균형점으로 보인다.
 
 ---
 

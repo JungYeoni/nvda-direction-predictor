@@ -62,7 +62,7 @@ y_pred_class = 1 if predicted y_reg > validation-selected threshold
 
 최종 Huber 회귀→분류 모형은 Accuracy 60.44%를 기록했다. 과제 기준상 58% 이상 구간에 해당하므로 예측력 평가에서 가장 높은 구간을 목표로 제시할 수 있다. Precision은 0.595로, 모형이 "NVDA가 QQQ보다 0.2%p 이상 강하다"고 예측한 날 중 약 59.5%가 실제로 맞았다.
 
-ROC-AUC만 보면 일반 LR이 0.610으로 가장 높았지만, Huber 회귀→분류 모형은 Accuracy, Precision, MCC가 가장 높았다. 따라서 발표에서는 최종 실전형 모형을 Huber 회귀→분류로 제시하고, ROC-AUC 관점에서는 LR도 강한 비교 모형이었다고 설명하는 것이 적절하다.
+ROC-AUC만 보면 일반 LR이 0.610으로 가장 높았지만, Huber 회귀→분류 모형은 Accuracy와 MCC가 가장 높고 Precision도 0.595로 높았다. 따라서 발표에서는 최종 실전형 모형을 Huber 회귀→분류로 제시하고, ROC-AUC 관점에서는 LR도 강한 비교 모형이었다고 설명하는 것이 적절하다.
 
 ### 그림 1. 실제 주가와 예측 정오 표시
 
@@ -76,7 +76,7 @@ ROC-AUC만 보면 일반 LR이 0.610으로 가장 높았지만, Huber 회귀→�
 
 첫째, 타깃 정의를 비교했다. 기존의 `NVDA return > 0` 타깃은 LR 기준 Accuracy 53.33%, ROC-AUC 0.558에 그쳤다. 반면 `NVDA return - QQQ return > 0.2%p` 타깃은 Huber 회귀→분류 기준 Accuracy 60.44%, Precision 0.595를 기록했다. 이는 NVDA의 절대 방향보다 시장 대비 상대 강도를 예측하는 문제가 더 안정적이라는 점을 보여준다.
 
-둘째, 모형을 비교했다. 복잡한 신경망 모형인 LSTM, GRU, TCN, iTransformer-style classifier도 실험했지만, 최종적으로는 단순한 Logistic Regression이 가장 방어 가능한 결과를 보였다. 이는 금융 일별 데이터의 표본 수가 작고 노이즈가 강하기 때문에, 복잡한 모형이 항상 더 좋은 일반화 성능을 내지는 않는다는 점을 시사한다.
+둘째, 모형을 비교했다. 분류 모형만 비교하면 Logistic Regression이 가장 방어 가능한 기준선이었다. 복잡한 신경망 모형인 LSTM, GRU, TCN, iTransformer-style classifier도 실험했지만 LR을 일관되게 넘지는 못했다. 최종 제출 모형은 여기서 한 단계 확장해 초과수익률을 먼저 예측하는 Huber 회귀→분류 방식으로 선택했다.
 
 ## 6. 강점 및 한계점
 

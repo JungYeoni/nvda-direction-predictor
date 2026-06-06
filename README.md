@@ -1,14 +1,14 @@
 # nvda-direction-predictor
 
-NVIDIA(NVDA)의 다음 거래일 종가 방향을 예측하는 이진 분류 프로젝트입니다.
+NVIDIA(NVDA)의 단기 방향성과 QQQ 대비 초과수익 여부를 예측하는 프로젝트입니다.
 
 | 항목 | 내용 |
 |------|------|
 | 예측 종목 | NVIDIA Corporation (NVDA, NASDAQ) |
-| 예측 대상 | 다음 거래일 종가 방향 (상승: 1 / 하락·보합: 0) |
-| 문제 유형 | 이진 분류 (Binary Classification) |
+| 예측 대상 | NVDA 방향 및 `NVDA return - QQQ return > 0.2%p` |
+| 문제 유형 | 이진 분류, 회귀 후 분류 |
 | 데이터 기간 | 2020.01.09 ~ 2025.05.22 |
-| 사용 모형 | Logistic Regression, XGBoost, MLP, Dilated TCN |
+| 사용 모형 | Logistic Regression, XGBoost, MLP, TCN, LSTM, GRU, iTransformer-style, Huber Regression |
 
 ---
 
@@ -51,7 +51,7 @@ NVIDIA는 **AI 인프라 기업 / 반도체 기업 / 미국 성장주** 세 가�
 
 ---
 
-## 최종 성능 해석 (Test Set, 2024.07 ~ 2025.05)
+## 기본 방향 예측 성능 (Test Set, 2024.07 ~ 2025.05)
 
 | 모델 | Accuracy | ROC-AUC | F1 |
 |------|----------|---------|----|
@@ -61,7 +61,7 @@ NVIDIA는 **AI 인프라 기업 / 반도체 기업 / 미국 성장주** 세 가�
 | Dilated TCN | 53.17% | 0.466 | 0.694 |
 | Majority baseline | 52.4% | — | — |
 
-최종 해석은 ROC-AUC 기준으로 가장 안정적인 **Logistic Regression**을 중심으로 한다. Dilated TCN은 F1과 Accuracy가 높지만 `Recall=1.0`, `ROC-AUC=0.466`으로 상승 예측에 치우친 퇴화 신호가 있어 최종 우위 모델로 보지 않는다.
+기본 방향 예측에서는 ROC-AUC 기준으로 **Logistic Regression**이 가장 안정적이었다. Dilated TCN은 F1과 Accuracy가 높지만 `Recall=1.0`, `ROC-AUC=0.466`으로 상승 예측에 치우친 퇴화 신호가 있어 우위 모델로 보지 않는다.
 
 고확신 필터는 validation 기준으로 threshold를 선택하면 XGBoost `threshold=0.49`, test precision 52.8%, coverage 86.7%가 나온다. 기존 `threshold=0.52`의 test precision 56.3%는 test 기준 사후 선택 성격이 있어 최종 성능으로 사용하지 않는다.
 

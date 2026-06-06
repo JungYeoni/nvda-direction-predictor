@@ -77,6 +77,7 @@ y_cls = 1 if y_reg > 0.2%p else 0
 | Ridge | 회귀→분류 | 53.33% | 0.492 | 0.572 | 0.081 |
 | ElasticNet | 회귀→분류 | 55.56% | 0.518 | 0.570 | 0.093 |
 | XGBRegressor | 회귀→분류 | 57.33% | 0.621 | 0.554 | 0.126 |
+| LGBMRegressor | 회귀→분류 | 55.56% | 0.800 | 0.523 | 0.104 |
 | HistGBR | 회귀→분류 | 48.44% | 0.416 | 0.486 | -0.061 |
 
-Huber Regression은 이상치에 덜 민감한 선형 회귀 방식이어서 NVDA 수익률의 급등락일 영향을 줄일 수 있다. 이 실험에서 Huber 회귀→분류가 Accuracy, Precision, MCC 기준으로 가장 좋은 성능을 보였으므로 최종 제출 모형을 기존 tuned LR에서 Huber 회귀→분류로 갱신했다.
+Huber Regression은 이상치에 덜 민감한 선형 회귀 방식이어서 NVDA 수익률의 급등락일 영향을 줄일 수 있다. 이 실험에서 Huber 회귀→분류가 Accuracy와 MCC 기준으로 가장 좋은 성능을 보였고 Precision도 안정적이었으므로 최종 제출 모형을 기존 tuned LR에서 Huber 회귀→분류로 갱신했다. LGBMRegressor는 Precision은 높지만 Recall이 매우 낮아 신호를 거의 내지 않는 보수적 모형으로 해석한다.

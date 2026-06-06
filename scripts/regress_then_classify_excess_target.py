@@ -17,6 +17,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from lightgbm import LGBMRegressor
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.linear_model import ElasticNet, HuberRegressor, Ridge
 from sklearn.metrics import (
@@ -27,11 +28,10 @@ from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
     precision_score,
-    recall_score,
     r2_score,
+    recall_score,
     roc_auc_score,
 )
-from lightgbm import LGBMRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
