@@ -180,6 +180,7 @@ Validation 기준으로 선택하면 test precision 개선은 제한적이다. �
 | `reports/results/target_variant_all_models_metrics.csv` | 전체 모델 대체 타깃 비교 |
 | `reports/results/high_confidence_filter_val_selected.csv` | validation 기준 고확신 필터 재검증 |
 | `reports/results/regress_then_classify_summary.csv` | 회귀→분류 모델 비교 (Huber/Ridge/ElasticNet/XGB/LGBM/HistGBR) |
+| `reports/results/threshold_sensitivity.csv` | Huber 모형 threshold별 precision/coverage 분석 |
 | `reports/results/model_comparison.png` | 모델 성능 비교 차트 |
 | `reports/results/event_return_distribution.png` | 이벤트별 수익률 분포 |
 | `reports/figures/final_assignment_prediction_correctness.png` | 최종 모형 예측 정오 시각화 |

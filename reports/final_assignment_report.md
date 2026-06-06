@@ -45,7 +45,7 @@ y_pred_class = 1 if predicted y_reg > validation-selected threshold
 
 둘째, 여러 모형을 같은 train/validation/test 구간에서 비교했다. 비교 모형은 Logistic Regression, XGBoost, MLP, TCN, LSTM, GRU, iTransformer-style classifier다. 모든 모형은 validation set에서 threshold를 선택하고, test set은 최종 평가에만 사용했다.
 
-셋째, 개선 가능성이 가장 높은 Logistic Regression과 XGBoost를 우선 튜닝했다. 이후 방향만 분류하는 한계를 보완하기 위해 초과수익률 자체를 먼저 예측하는 회귀 접근을 추가했다. Ridge, ElasticNet, Huber, XGBoost Regressor, HistGradientBoosting Regressor를 비교했으며, 최종 선택된 모형은 Huber Regression을 이용한 회귀 후 분류 모형이다.
+셋째, 개선 가능성이 가장 높은 Logistic Regression과 XGBoost를 우선 튜닝했다. 이후 방향만 분류하는 한계를 보완하기 위해 초과수익률 자체를 먼저 예측하는 회귀 접근을 추가했다. Ridge, ElasticNet, Huber, XGBoost Regressor, LightGBM Regressor, HistGradientBoosting Regressor를 비교했으며, 최종 선택된 모형은 Huber Regression을 이용한 회귀 후 분류 모형이다. 트리 기반 회귀(XGBRegressor, LGBMRegressor, HistGBR)는 validation ROC-AUC가 0.50 이하로 학습 패턴이 반전돼 선형 모형에 비해 불안정했다.
 
 ## 4. 주요 분석 결과
 
