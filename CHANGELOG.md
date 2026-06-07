@@ -14,6 +14,8 @@
 
 ### 문서
 
+- Add presentation pdf ([1299fcb](https://github.com/JungYeoni/da-template/commit/1299fcb57b98a7d016a19dd2e9a7ffe0122c8de9))
+- CHANGELOG 자동 업데이트 [skip ci] ([2c79d39](https://github.com/JungYeoni/da-template/commit/2c79d39719cd18e4f36ecc9bd742e5322bc01a6b))
 - CHANGELOG 자동 업데이트 [skip ci] ([f9eb671](https://github.com/JungYeoni/da-template/commit/f9eb671b51f9ba9f660ba7dbfbbd99686964ec1c))
 - CHANGELOG 자동 업데이트 [skip ci] ([79afb15](https://github.com/JungYeoni/da-template/commit/79afb15d1ebbf97ef549350ce1ed143b593e8c78))
 - 발표 대본 추가 ([4521cec](https://github.com/JungYeoni/da-template/commit/4521cec101d9fe11d8c080e98e62056c272efcc0))
