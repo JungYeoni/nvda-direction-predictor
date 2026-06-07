@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:36px 52px}
+  .eyebrow{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#1B2A4A;font-weight:500;margin-bottom:16px;padding-left:0}
+  h2{font-size:24px;font-weight:700;color:#111;letter-spacing:0;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1}
+  .col{border-top:2px solid;padding-top:14px}
+  .col.strength{border-color:#1B2A4A}
+  .col.limit{border-color:#C62828}
+  .col-title{font-size:9px;letter-spacing:0;text-transform:uppercase;font-weight:600;margin-bottom:14px}
+  .col.strength .col-title{color:#1B2A4A}
+  .col.limit .col-title{color:#C62828}
+  ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  li{font-size:12.5px;color:#333;line-height:1.5;padding-left:16px;position:relative}
+  li::before{position:absolute;left:0;font-size:11px}
+  .strength li::before{content:'✓';color:#1B2A4A}
+  .limit li::before{content:'—';color:#C62828}
+</style>
+</head>
+<body>
+  <div class="eyebrow">강점 및 한계점</div>
+  <h2>평가</h2>
+  <div class="grid">
+    <div class="col strength">
+      <div class="col-title">강점</div>
+      <ul>
+        <li>예측 대상을 QQQ 대비 상대 성과로 변경</li>
+        <li>수익률 크기 정보 활용 (회귀→분류)</li>
+        <li>Validation 기준 임계값 — test leakage 방지</li>
+        <li>22개 다차원 피처로 시장 구조 반영</li>
+      </ul>
+    </div>
+    <div class="col limit">
+      <div class="col-title">한계</div>
+      <ul>
+        <li>거래비용·슬리피지 미반영</li>
+        <li>뉴스·공시·감성 데이터 미활용</li>
+        <li>Test 기간(2024~2025)에 국한된 검증</li>
+        <li>타깃이 "상대 성과"라 투자 해석 주의 필요</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

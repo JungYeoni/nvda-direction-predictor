@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:grid;grid-template-columns:200px 1fr}
+  .sidebar{background:#1B2A4A;padding:36px 28px;display:flex;flex-direction:column;justify-content:space-between}
+  .sidebar .tag{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#7B9BC8;font-weight:500}
+  .sidebar h3{font-size:20px;font-weight:700;color:#fff;line-height:1.2;margin-top:12px}
+  .sidebar .model{background:rgba(255,255,255,0.1);border-radius:2px;padding:6px 10px;font-size:10.5px;color:#A8C0E0;margin-top:auto}
+  .main{padding:36px 40px;display:flex;flex-direction:column;justify-content:center}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .block{border-top:2px solid #111;padding-top:12px}
+  .block .bt{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#999;font-weight:500;margin-bottom:8px}
+  .block p, .block li{font-size:12.5px;color:#333;line-height:1.65;list-style:none}
+  .formula{background:#F7F9FC;padding:12px 16px}
+  .formula p{font-size:12.5px;color:#222;line-height:1.5}
+  .formula .warn{font-size:11px;color:#C62828;margin-top:5px}
+</style>
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <div class="tag">모형 1</div>
+      <h3>Logistic Regression</h3>
+      <div style="font-size:11px;color:#7B9BC8;margin-top:8px;line-height:1.5">기준 모형<br>Baseline</div>
+      <div style="font-size:10.5px;color:#A8C0E0;margin-top:14px;line-height:1.6">피처의 선형 결합으로 상승 확률을 추정하는 이진 분류 모형</div>
+    </div>
+    <div class="model">Accuracy 53.78%</div>
+  </div>
+  <div class="main">
+    <div class="row">
+      <div class="block">
+        <div class="bt">타깃 정의</div>
+        <p>내일 NVDA 종가 &gt; 오늘 종가<br>상승 1 / 하락·보합 0<br>StandardScaler + LR (C=0.001)</p>
+      </div>
+      <div class="block">
+        <div class="bt">설계상 한계</div>
+        <p>+5%p 급등 = +0.1%p 소폭 상승<br>→ 동일하게 "1" 처리<br>수익률 크기 정보 손실</p>
+      </div>
+    </div>
+    <div class="formula">
+      <p style="margin-bottom:6px"><strong>P(y<sub>t</sub>=1)</strong> = σ(β<sub>0</sub> + β<sub>1</sub>X<sub>1</sub> + ··· + β<sub>n</sub>X<sub>n</sub>)</p>
+      <p style="font-size:11px;color:#666;margin-bottom:6px">σ: 시그모이드 함수 &nbsp;·&nbsp; X: 전일 피처 22개</p>
+      <p><strong>y<sub>t</sub> = 1</strong> &nbsp;if&nbsp; NVDA_Close<sub>t</sub> &gt; NVDA_Close<sub>t−1</sub></p>
+      <p class="warn">→ 조금 오른 날과 크게 오른 날을 똑같이 봄</p>
+    </div>
+  </div>
+</body>
+</html>

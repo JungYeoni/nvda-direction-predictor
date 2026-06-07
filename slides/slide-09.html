@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:28px 40px 24px}
+  .header{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .fig-tag{background:#1B2A4A;color:#fff;font-size:9px;padding:3px 10px;border-radius:2px;font-weight:500;letter-spacing:0;white-space:nowrap}
+  h2{font-size:17px;font-weight:600;color:#111;letter-spacing:0}
+  .acc{font-size:13px;color:#888;margin-left:auto;white-space:nowrap}
+  .img-wrap{flex:1;display:flex;align-items:center;justify-content:center;background:#FAFAFA;border:1px solid #EBEBEB}
+  img{max-width:638px;max-height:270px;object-fit:contain}
+  .caption{font-size:10.5px;color:#666;line-height:1.5;margin-top:8px;border-top:1px solid #EBEBEB;padding-top:7px}
+  .caption strong{color:#1B2A4A;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="fig-tag">그림 1</div>
+    <h2>모형 1 예측 결과 — Logistic Regression</h2>
+    <div class="acc">Accuracy 53.78%</div>
+  </div>
+  <div class="img-wrap">
+    <img src="./assets/lr_prediction_correctness.png" alt="LR 예측 정오 시각화">
+  </div>
+  <p class="caption"><strong>해석:</strong> 초록 점은 맞춘 날, 빨간 X는 틀린 날을 뜻한다. 기준 모형은 전체 흐름을 따라가지만, 시장 급변 구간에서 오류가 반복된다.</p>
+</body>
+</html>

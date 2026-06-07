@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:36px 36px 30px}
+  .eyebrow{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#1B2A4A;font-weight:500;margin-bottom:16px;padding-left:0}
+  h2{font-size:24px;font-weight:700;color:#111;letter-spacing:0;margin-bottom:22px}
+  .flow{display:flex;align-items:center;gap:0;flex:1;width:100%}
+  .stage{display:flex;flex-direction:column;justify-content:center;flex:1 1 0;padding:14px 11px;border:1px solid #E0E0E0;height:100%;position:relative;min-width:0}
+  .stage:nth-of-type(1){flex-grow:1.2}
+  .stage:nth-of-type(3){flex-grow:1.14}
+  .stage.final{flex-grow:1.08}
+  .stage+.stage{border-left:none}
+  .stage-num{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#999;font-weight:500;margin-bottom:8px}
+  .stage-title{font-size:12.6px;font-weight:700;color:#111;margin-bottom:7px;line-height:1.3;white-space:nowrap}
+  .stage-items{display:flex;flex-direction:column;gap:3px}
+  .stage-item{font-size:10.8px;color:#555;line-height:1.35;list-style:none;white-space:nowrap}
+  .stage-item::before{content:'·';margin-right:5px;color:#BBB}
+  .stage-why{margin-top:10px;padding-top:8px;border-top:1px solid #ECECEC;font-size:10px;color:#777;line-height:1.35}
+  .stage-why strong{display:block;font-size:8.5px;color:#999;font-weight:600;margin-bottom:2px}
+  .arrow{color:#CCC;font-size:18px;flex-shrink:0;padding:0 2px}
+  .stage.final{background:#1B2A4A;border-color:#1B2A4A}
+  .stage.final .stage-num{color:#7B9BC8}
+  .stage.final .stage-title{color:#fff}
+  .stage.final .stage-item{color:#A8C0E0}
+  .stage.final .stage-item::before{color:#4A6A8A}
+  .stage.final .stage-item.result-item{color:#FFB3B3;font-weight:600}
+  .stage.final .stage-why{border-color:rgba(255,255,255,0.14);color:#C8D8F0}
+  .stage.final .stage-why strong{color:#7B9BC8}
+</style>
+</head>
+<body>
+  <p class="eyebrow">실험 설계 · Experiment Overview</p>
+  <h2>최종 모형 선택까지의 과정</h2>
+  <div class="flow">
+    <div class="stage">
+      <p class="stage-num">단계 1</p>
+      <h3 class="stage-title">피처 설계 확장</h3>
+      <ul class="stage-items">
+        <li class="stage-item">처음: NVDA 가격 중심</li>
+        <li class="stage-item">이후: 전일 수익률 · 시장 변수</li>
+        <li class="stage-item">상대강도 · 이벤트까지 추가</li>
+      </ul>
+      <p class="stage-why"><strong>확인 이유</strong>가격만으로 부족한 정보가 있는지 확인</p>
+    </div>
+    <p class="arrow">›</p>
+    <div class="stage">
+      <p class="stage-num">단계 2</p>
+      <h3 class="stage-title">7개 모형 비교</h3>
+      <ul class="stage-items">
+        <li class="stage-item">LR · XGBoost · MLP</li>
+        <li class="stage-item">TCN · LSTM · GRU</li>
+        <li class="stage-item">iTransformer</li>
+      </ul>
+      <p class="stage-why"><strong>확인 이유</strong>복잡한 모형이 실제로 더 나은지 비교</p>
+    </div>
+    <p class="arrow">›</p>
+    <div class="stage">
+      <p class="stage-num">단계 3</p>
+      <h3 class="stage-title">타깃 4종 비교</h3>
+      <ul class="stage-items">
+        <li class="stage-item">NVDA return &gt; 0</li>
+        <li class="stage-item">NVDA − QQQ &gt; 0</li>
+        <li class="stage-item">NVDA − QQQ &gt; 0.2%p</li>
+      </ul>
+      <p class="stage-why"><strong>확인 이유</strong>예측 질문을 바꾸면 성능이 달라지는지 확인</p>
+    </div>
+    <p class="arrow">›</p>
+    <div class="stage final">
+      <p class="stage-num">최종 선택</p>
+      <h3 class="stage-title">Huber 회귀→분류</h3>
+      <ul class="stage-items">
+        <li class="stage-item">초과수익률 회귀 예측</li>
+        <li class="stage-item">Validation 임계값 선택</li>
+        <li class="stage-item result-item">Accuracy 60.44%</li>
+      </ul>
+      <p class="stage-why"><strong>선택 이유</strong>수익률 크기와 이상치 대응을 함께 반영</p>
+    </div>
+  </div>
+</body>
+</html>

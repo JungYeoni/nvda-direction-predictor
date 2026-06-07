@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;justify-content:flex-start;padding:36px 52px}
+  .eyebrow{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#1B2A4A;font-weight:500;margin-bottom:12px}
+  .tag-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .tag{color:#fff;font-size:9px;font-weight:600;padding:3px 8px;border-radius:2px;white-space:nowrap;letter-spacing:0}
+  .tag.blue{background:#1B2A4A}
+  .tag.gray{background:#888}
+  .tag-text{font-size:13.5px;font-weight:500;color:#222;line-height:1.5}
+  .trend{font-size:11px;color:#888;margin-bottom:20px;line-height:1.5}
+  .trend span{color:#1B2A4A;font-weight:500}
+  .item{display:flex;align-items:center;gap:22px;margin-bottom:16px}
+  .item:last-child{margin-bottom:0}
+  .num{font-size:44px;font-weight:700;color:#E8EDF4;line-height:1;width:56px;flex-shrink:0;text-align:right}
+  .body .title{font-size:14px;font-weight:700;color:#1B2A4A;margin-bottom:3px}
+  .body .desc{font-size:12px;color:#444;line-height:1.5}
+</style>
+</head>
+<body>
+  <p class="eyebrow">서론 · Introduction</p>
+  <div class="tag-row">
+    <span class="tag blue">개발 동기</span>
+    <span class="tag-text">NVIDIA는 AI 반도체 흐름의 중심에 있는 종목이다. 공개된 시장 데이터로 단기 방향을 예측할 수 있을까?</span>
+  </div>
+  <div class="tag-row" style="margin-bottom:18px">
+    <span class="tag gray">연구 흐름</span>
+    <span class="trend" style="margin-bottom:0">가격·기술지표 → 뉴스·이벤트 결합 → 종목 관계·Transformer → LLM 멀티모달</span>
+  </div>
+  <section class="item">
+    <p class="num">01</p>
+    <div class="body">
+      <h2 class="title">세 가지 정체성</h2>
+      <p class="desc">NVDA 주가는 회사 이슈뿐 아니라 반도체 업황, 나스닥 흐름, 금리에도 같이 흔들린다</p>
+    </div>
+  </section>
+  <section class="item">
+    <p class="num">02</p>
+    <div class="body">
+      <h2 class="title">핵심 가설</h2>
+      <p class="desc">가격만으로는 한계가 있어 시장(QQQ) 대비 상대 강도 문제로 출발했다</p>
+    </div>
+  </section>
+  <section class="item">
+    <p class="num">03</p>
+    <div class="body">
+      <h2 class="title">연구질문</h2>
+      <p class="desc">예측 질문을 바꾸면 test 구간 성능이 얼마나 달라지는가?</p>
+    </div>
+  </section>
+</body>
+</html>

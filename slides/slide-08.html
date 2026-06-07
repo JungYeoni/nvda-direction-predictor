@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:720px;height:405px;overflow:hidden;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;padding:36px 52px}
+  .eyebrow{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#1B2A4A;font-weight:500;margin-bottom:16px;padding-left:0}
+  h2{font-size:24px;font-weight:700;color:#111;letter-spacing:0;margin-bottom:20px}
+  table{width:100%;border-collapse:collapse;font-size:12px;flex:1}
+  thead th{font-size:9px;letter-spacing:0;text-transform:uppercase;color:#999;font-weight:500;padding:8px 12px;text-align:right;border-bottom:2px solid #111}
+  thead th:first-child,thead th:nth-child(2){text-align:left}
+  tbody td{padding:12px 12px;border-bottom:1px solid #EBEBEB;color:#444;text-align:right;font-size:12.5px}
+  tbody td:first-child{text-align:left;color:#333;font-weight:500}
+  tbody td:nth-child(2){text-align:left;font-size:11.5px;color:#888}
+  tbody tr.best td{background:#F0F4FB}
+  tbody tr.best td:first-child{color:#1B2A4A;font-weight:700}
+  .hi{color:#C62828;font-weight:700;font-size:14px}
+  .tag{display:inline-block;background:#1B2A4A;color:#fff;font-size:9px;padding:2px 7px;border-radius:2px;margin-left:6px;vertical-align:middle;font-weight:500;letter-spacing:0}
+  .note{font-size:10.5px;color:#999;margin-top:12px;border-top:1px solid #EBEBEB;padding-top:10px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">표 1 · Precision Evaluation</div>
+  <h2>정밀도 평가표 — 두 모형 비교</h2>
+  <table>
+    <thead>
+      <tr><th>모형</th><th>타깃</th><th>Accuracy</th><th>Precision</th><th>ROC-AUC</th><th>MCC</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Logistic Regression<br><span style="font-size:10px;color:#aaa;font-weight:400">기준 모형</span></td>
+        <td>NVDA &gt; 0</td>
+        <td>53.78%</td><td>0.552</td><td>0.559</td><td>0.068</td>
+      </tr>
+      <tr class="best">
+        <td>Huber 회귀→분류 <span class="tag">최종</span><br><span style="font-size:10px;color:#1B2A4A;font-weight:400">개선 모형</span></td>
+        <td>NVDA−QQQ &gt; 0.2%p</td>
+        <td><span class="hi">60.44%</span></td>
+        <td><span class="hi">0.595</span></td>
+        <td>0.578</td>
+        <td><span class="hi">0.192</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">예측 대상을 시장 대비 초과수익으로 바꾸자 Accuracy가 53.78% → 60.44%로 상승 · 과제 기준 58% 이상 달성 · Test n=225일</div>
+</body>
+</html>

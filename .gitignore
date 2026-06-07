@@ -73,4 +73,6 @@ htmlcov/
 
 # 문서 / 설계 산출물
 docs/
-slides/
+
+# 발표 연습용 대본은 제출 zip에서 제외
+reports/presentation_script.md
