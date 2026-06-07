@@ -12,6 +12,8 @@
 
 ### 문서
 
+- 발표 대본 추가 ([4521cec](https://github.com/JungYeoni/da-template/commit/4521cec101d9fe11d8c080e98e62056c272efcc0))
+- CHANGELOG 자동 업데이트 [skip ci] ([7be6ef1](https://github.com/JungYeoni/da-template/commit/7be6ef16b6bb963235283e509dc5d75b83e26225))
 - CHANGELOG 자동 업데이트 [skip ci] ([b658e23](https://github.com/JungYeoni/da-template/commit/b658e23ce74e48496eb2f6df5969e3745f9762e0))
 - LightGBM 실험 언급 추가 및 산출물 목록 갭 수정 ([b93155e](https://github.com/JungYeoni/da-template/commit/b93155e6e13714710051d24ac537835eef856cae))
 - CHANGELOG 자동 업데이트 [skip ci] ([38b3b3b](https://github.com/JungYeoni/da-template/commit/38b3b3b3e3480b93cc620835b6106a1b1cb270b8))
