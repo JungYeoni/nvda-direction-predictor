@@ -8,11 +8,13 @@
 
 ### 기타
 
+- Include slides in submission zip ([fc7a0e7](https://github.com/JungYeoni/da-template/commit/fc7a0e74ee11df68a5c7bd21d8f0e65be6e10ff6))
 - Slides/ 디렉토리 gitignore 추가 ([8232a35](https://github.com/JungYeoni/da-template/commit/8232a354d4eafc21bb37d645ed574bb9d1392c65))
 - 의존성 설치 ([09867de](https://github.com/JungYeoni/da-template/commit/09867de390aa686ef5cb3e07c27a8c92caa7abda))
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([f9eb671](https://github.com/JungYeoni/da-template/commit/f9eb671b51f9ba9f660ba7dbfbbd99686964ec1c))
 - CHANGELOG 자동 업데이트 [skip ci] ([79afb15](https://github.com/JungYeoni/da-template/commit/79afb15d1ebbf97ef549350ce1ed143b593e8c78))
 - 발표 대본 추가 ([4521cec](https://github.com/JungYeoni/da-template/commit/4521cec101d9fe11d8c080e98e62056c272efcc0))
 - CHANGELOG 자동 업데이트 [skip ci] ([7be6ef1](https://github.com/JungYeoni/da-template/commit/7be6ef16b6bb963235283e509dc5d75b83e26225))
