@@ -2,12 +2,17 @@
 
 ## 미출시 변경사항
 
+### nb
+
+- Modeling.ipynb 실행 결과 채움 ([48b2961](https://github.com/JungYeoni/da-template/commit/48b2961110541a12fd3513d5e1e1de99a8de49e9))
+
 ### 기타
 
 - 의존성 설치 ([09867de](https://github.com/JungYeoni/da-template/commit/09867de390aa686ef5cb3e07c27a8c92caa7abda))
 
 ### 문서
 
+- CHANGELOG 자동 업데이트 [skip ci] ([b658e23](https://github.com/JungYeoni/da-template/commit/b658e23ce74e48496eb2f6df5969e3745f9762e0))
 - LightGBM 실험 언급 추가 및 산출물 목록 갭 수정 ([b93155e](https://github.com/JungYeoni/da-template/commit/b93155e6e13714710051d24ac537835eef856cae))
 - CHANGELOG 자동 업데이트 [skip ci] ([38b3b3b](https://github.com/JungYeoni/da-template/commit/38b3b3b3e3480b93cc620835b6106a1b1cb270b8))
 - CHANGELOG 자동 업데이트 [skip ci] ([6eb104d](https://github.com/JungYeoni/da-template/commit/6eb104d7b800fc597853c411066f6949795fcdba))
