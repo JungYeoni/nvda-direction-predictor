@@ -76,6 +76,12 @@ docs/
 
 # 발표자료 원본 HTML은 제출 zip에서 제외
 *.html
+slides/assets/
+slides/slide-outline.md
+
+# 제출용 로컬 산출 PDF는 GitHub 업로드에서 제외
+/submission_code_full.pdf
+/23011818_*.pdf
 
 # 발표 연습용 대본은 제출 zip에서 제외
 reports/presentation_script.md
